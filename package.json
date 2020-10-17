@@ -4,7 +4,8 @@
   "description": "A simple script for converting Toggl entries into jira work log entries.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --ext .ts src",
+    "lint-preview": "eslint --ext .ts src",
+    "lint": "eslint --ext .ts src --fix",
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
