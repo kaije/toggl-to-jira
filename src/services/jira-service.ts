@@ -1,6 +1,7 @@
 import * as fetch from 'node-fetch';
 import { JIRA_API_KEY, JIRA_BASE_URL, JIRA_USER_EMAIL } from '../config';
 import JiraWorkLog from '../model/jira-work-log';
+import { formatDuration } from '../utils/duration-formatter';
 
 export default class JiraService {
   async logWorkInJira(jiraWorkLog: JiraWorkLog): Promise<void> {
@@ -19,7 +20,9 @@ export default class JiraService {
 
     try {
       console.info(
-        `Logging ${jiraWorkLog.timeSpentSeconds} seconds to Jira issue ${jiraWorkLog.issueKey}: ${jiraWorkLog.comment}`
+        `Logging ${formatDuration(jiraWorkLog.timeSpentSeconds, false)} to ${jiraWorkLog.issueKey}: ${
+          jiraWorkLog.comment
+        }`
       );
       console.info(url);
 
