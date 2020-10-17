@@ -5,6 +5,7 @@ import TogglTimeEntry from '../model/toggl-time-entry';
 import JiraWorkLog from '../model/jira-work-log';
 import JiraService from './jira-service';
 import TogglService from './toggl-service';
+import { formatDuration } from '../utils/duration-formatter';
 
 export default class WorkLogger {
   private togglService = new TogglService();
@@ -64,7 +65,7 @@ export default class WorkLogger {
   private listEntries(entries: TogglTimeEntry[]) {
     for (const entry of entries) {
       console.info(
-        `(${entry.jiraIssueKey ? entry.jiraIssueKey : 'None'}) ${entry.description} - ${this.getDuration(entry)}`
+        `(${entry.jiraIssueKey ? entry.jiraIssueKey : 'None'}) ${entry.description} - ${formatDuration(entry.duration)}`
       );
     }
   }
@@ -97,10 +98,5 @@ export default class WorkLogger {
       await jiraService.logWorkInJira(workLog);
     }
     return;
-  }
-
-  private getDuration(entry: TogglTimeEntry) {
-    const duration = moment.duration(entry.duration, 'seconds');
-    return `${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`;
   }
 }
