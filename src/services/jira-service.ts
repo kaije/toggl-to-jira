@@ -1,12 +1,10 @@
-import JiraWorkLog from '../model/jira-work-log';
 import * as fetch from 'node-fetch';
 import { JIRA_API_KEY, JIRA_BASE_URL, JIRA_USER_EMAIL } from '../config';
+import JiraWorkLog from '../model/jira-work-log';
 
-export default async function logWorkInJira(jiraWorkLog: JiraWorkLog) {
+export default async function logWorkInJira(jiraWorkLog: JiraWorkLog): Promise<void> {
   const url = `${JIRA_BASE_URL}/rest/api/2/issue/${jiraWorkLog.issueKey}/worklog`;
-  const authToken = Buffer.from(`${JIRA_USER_EMAIL}:${JIRA_API_KEY}`).toString(
-    'base64'
-  );
+  const authToken = Buffer.from(`${JIRA_USER_EMAIL}:${JIRA_API_KEY}`).toString('base64');
 
   const body = {
     timeSpentSeconds: jiraWorkLog.timeSpentSeconds,

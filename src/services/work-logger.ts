@@ -1,11 +1,13 @@
 import { getTogglProjects, getTogglTimeEntries } from './toggl-service';
-import JiraWorkLog from '../model/jira-work-log';
 import * as moment from 'moment';
 import * as reader from 'readline-sync';
 import logWorkInJira from './jira-service';
+import TogglProject from '../model/toggl-project';
+import TogglTimeEntry from '../model/toggl-time-entry';
+import JiraWorkLog from '../model/jira-work-log';
 
 export default class WorkLogger {
-  async run() {
+  async run(): Promise<void> {
     const projects = await getTogglProjects();
     console.info(`Retrieved ${projects.length} active Toggl projects`);
 
@@ -22,10 +24,7 @@ export default class WorkLogger {
     const entries = await getTogglTimeEntries(targetDate);
 
     console.info(
-      `Found ${entries.length} Toggl entries for ${moment(
-        targetDate,
-        moment.ISO_8601
-      ).format('dddd, MMMM Do YYYY')}`
+      `Found ${entries.length} Toggl entries for ${moment(targetDate, moment.ISO_8601).format('dddd, MMMM Do YYYY')}`
     );
     console.info();
 
@@ -53,14 +52,9 @@ export default class WorkLogger {
     }
   }
 
-  private mapEntriesToProjects(
-    projects: TogglProject[],
-    entries: TogglTimeEntry[]
-  ): TogglTimeEntry[] {
+  private mapEntriesToProjects(projects: TogglProject[], entries: TogglTimeEntry[]): TogglTimeEntry[] {
     return entries.map((entry) => {
-      entry.jiraIssueKey = projects.find(
-        (project) => project.id == entry.pid
-      )?.name;
+      entry.jiraIssueKey = projects.find((project) => project.id == entry.pid)?.name;
       return entry;
     });
   }
@@ -68,9 +62,7 @@ export default class WorkLogger {
   private listEntries(entries: TogglTimeEntry[]) {
     for (const entry of entries) {
       console.info(
-        `(${entry.jiraIssueKey ? entry.jiraIssueKey : 'None'}) ${
-          entry.description
-        } - ${this.getDuration(entry)}`
+        `(${entry.jiraIssueKey ? entry.jiraIssueKey : 'None'}) ${entry.description} - ${this.getDuration(entry)}`
       );
     }
   }
