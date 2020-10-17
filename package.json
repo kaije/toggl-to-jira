@@ -1,7 +1,7 @@
 {
   "name": "toggl-to-jira",
   "version": "0.0.1",
-  "description": "A simple script for converting Toggl entries into jira work log entries.",
+  "description": "A simple script for converting Toggl entries into jira worklog entries.",
   "main": "index.js",
   "scripts": {
     "lint-preview": "eslint --ext .ts src",
