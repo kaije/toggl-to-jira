@@ -27,6 +27,7 @@
     "@types/readline-sync": "^1.4.3",
     "dotenv": "^8.2.0",
     "moment": "^2.29.1",
+    "node-emoji": "^1.10.0",
     "node-fetch": "^2.6.1",
     "readline-sync": "^1.4.10"
   }

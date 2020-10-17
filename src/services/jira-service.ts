@@ -1,4 +1,5 @@
 import * as fetch from 'node-fetch';
+import * as emoji from 'node-emoji';
 import { JIRA_API_KEY, JIRA_BASE_URL, JIRA_USER_EMAIL } from '../config';
 import JiraWorkLog from '../model/jira-work-log';
 import { formatDuration } from '../utils/duration-formatter';
@@ -38,9 +39,9 @@ export default class JiraService {
       });
 
       if (response.status === 201) {
-        console.info(`Success!`);
+        console.info(`${emoji.get('white_check_mark')} Success!`);
       } else {
-        console.error(`Failed:`);
+        console.error(`${emoji.get('no_entry')} Failed:`);
         console.info(`response.status = ${response.status}`);
         console.info(`response.statusText = ${response.statusText}`);
       }
