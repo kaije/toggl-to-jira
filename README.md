@@ -22,7 +22,7 @@ To use this script, you must be using Jira issue keys (e.g. STA-207) as your Tog
 
 ### Configure credentials for the Toggl and JIRA APIs
 
-Create a file called `.env` in the root of the project containing your private API tokens and your Jira user email:
+Create a file called `.env` in the root of the project containing your private API tokens and your user account details as shown:
 
 ```text
 # Set your API tokens here
@@ -32,6 +32,9 @@ JIRA_API_KEY=0987654321zyxabc1234567890
 # Set your Jira account details here
 JIRA_BASE_URL="https://somewhere.atlassian.net"
 JIRA_USER_EMAIL="someone@somewhere.com"
+
+# Set your Toggl account details here
+TOGGL_WORKSPACE_ID=1234567
 ```
 
 DO NOT COMMIT THIS FILE. It is included in `.gitignore` by default.
