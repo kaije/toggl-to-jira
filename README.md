@@ -61,3 +61,21 @@ Enter a target date in the specified format when prompted.
 The script will display a list of Toggl entries found for that date, and then ask if you want to continue.
 
 Enter 'Y' to go ahead and send these entries to Jira, or hit enter to cancel (e.g. if you'd like to do a bit of clean up in Toggl before proceeding).
+
+## Contributing
+
+This project uses ESLint for TypeScript and Prettier for linting and formatting.
+
+### Linting
+
+Find and apply fixes:
+
+```bash
+npm run lint
+```
+
+Or preview problems/fixes first without applying:
+
+```bash
+npm run lint-preview
+```

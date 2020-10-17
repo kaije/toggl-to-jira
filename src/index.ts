@@ -1,3 +1,3 @@
-import WorkLogger from './services/work-logger'
+import WorkLogger from './services/work-logger';
 
-new WorkLogger().run()
+new WorkLogger().run();
