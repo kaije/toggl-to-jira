@@ -1,0 +1,25 @@
+{
+  "name": "toggl-to-jira",
+  "version": "0.0.1",
+  "description": "A simple script for converting Toggl entries into jira work log entries.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kelly J Farlow",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^14.11.8",
+    "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/readline-sync": "^1.4.3",
+    "dotenv": "^8.2.0",
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.1",
+    "readline-sync": "^1.4.10"
+  }
+}
