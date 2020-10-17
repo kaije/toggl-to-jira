@@ -29,8 +29,8 @@ export default class TogglService {
     let url = 'https://www.toggl.com/api/v8/time_entries';
 
     const targetMoment = moment(targetDate, moment.ISO_8601);
-    const start = targetMoment.format();
-    const end = targetMoment.clone().add(1, 'day').subtract(1, 'second').format();
+    const start = targetMoment.startOf('day').format();
+    const end = targetMoment.clone().endOf('day').format();
 
     url = `${url}?${new URLSearchParams({ start_date: start, end_date: end })}`;
 
