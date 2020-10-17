@@ -3,6 +3,7 @@ import JiraWorkLog from '../model/jira-work-log'
 import * as moment from 'moment'
 import * as reader from 'readline-sync'
 import logWorkInJira from './jira-service'
+import { formatDuration } from '../utils/duration-formatter'
 
 export default class WorkLogger {
 
@@ -57,7 +58,7 @@ export default class WorkLogger {
 
     private listEntries(entries: TogglTimeEntry[]) {
         for (let entry of entries) {
-            console.info(`(${entry.jiraIssueKey ? entry.jiraIssueKey : "None"}) ${entry.description} - ${this.getDuration(entry)}`)
+            console.info(`(${entry.jiraIssueKey ? entry.jiraIssueKey : "None"}) ${entry.description} - ${formatDuration(entry.duration)}`)
         }
     }
 
@@ -87,10 +88,5 @@ export default class WorkLogger {
             await logWorkInJira(workLog)
         }
         return
-    }
-
-    private getDuration(entry: TogglTimeEntry) {
-        const duration = moment.duration(entry.duration, 'seconds')
-        return `${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`
     }
 }
