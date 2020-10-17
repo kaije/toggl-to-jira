@@ -31,6 +31,8 @@ Create a file called `.env` in the root of the project containing your private A
 TOGGL_API_KEY=1234567890abcdefghijklmnopq
 JIRA_API_KEY=0987654321zyxabc1234567890
 
+# Set your Jira account details here
+JIRA_BASE_URL="https://somewhere.atlassian.net"
 JIRA_USER_EMAIL="someone@somewhere.com"
 ```
 
