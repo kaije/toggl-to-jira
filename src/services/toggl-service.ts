@@ -5,19 +5,21 @@ import TogglTimeEntry from '../model/toggl-time-entry';
 import TogglProject from '../model/toggl-project';
 
 export default class TogglService {
+  private authToken = Buffer.from(`${TOGGL_API_KEY}:api_token`).toString('base64');
+
   async getTogglProjects(): Promise<TogglProject[]> {
     const url = 'https://api.track.toggl.com/api/v8/workspaces/3678208/projects';
-    const authToken = Buffer.from(`${TOGGL_API_KEY}:api_token`).toString('base64');
 
     try {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
-          Authorization: `Basic ${authToken}`,
+          Authorization: `Basic ${this.authToken}`,
         },
         referrerPolicy: 'no-referrer',
       });
+      console.log(response);
       return response.json();
     } catch (error) {
       console.log(error);
@@ -38,7 +40,7 @@ export default class TogglService {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
-          Authorization: `Basic ${authToken}`,
+          Authorization: `Basic ${this.authToken}`,
         },
         referrerPolicy: 'no-referrer',
       });
