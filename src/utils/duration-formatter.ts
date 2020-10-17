@@ -8,3 +8,9 @@ export function formatDuration(durationInSeconds: number, includeSeconds = true)
   }
   return formattedStr;
 }
+
+export function roundSeconds(durationInSeconds: number): number {
+  const duration = moment.duration(durationInSeconds, 'seconds');
+  const seconds = duration.seconds();
+  return durationInSeconds < 60 || seconds > 29 ? durationInSeconds + 60 - seconds : durationInSeconds - seconds;
+}

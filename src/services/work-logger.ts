@@ -5,7 +5,7 @@ import TogglTimeEntry from '../model/toggl-time-entry';
 import JiraWorkLog from '../model/jira-work-log';
 import JiraService from './jira-service';
 import TogglService from './toggl-service';
-import { formatDuration } from '../utils/duration-formatter';
+import { formatDuration, roundSeconds } from '../utils/duration-formatter';
 
 export default class WorkLogger {
   private togglService = new TogglService();
@@ -76,7 +76,7 @@ export default class WorkLogger {
       if (entry.jiraIssueKey) {
         const workLog: JiraWorkLog = {
           issueKey: entry.jiraIssueKey,
-          timeSpentSeconds: this.ensureMinimumDuration(entry.duration),
+          timeSpentSeconds: roundSeconds(entry.duration),
           comment: entry.description,
           started: moment(entry.start).format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
         };
@@ -84,10 +84,6 @@ export default class WorkLogger {
       }
     }
     return workLogs;
-  }
-
-  private ensureMinimumDuration(durationInSeconds: number): number {
-    return durationInSeconds < 60 ? 60 : durationInSeconds;
   }
 
   private async logEntriesToJira(workLogs: JiraWorkLog[]) {
