@@ -40,6 +40,8 @@ export default class JiraService {
 
       if (response.status === 201) {
         console.info(`${emoji.get('white_check_mark')} Success!`);
+        const newWorkLog = await response.json();
+        console.log(`Created worklog with id ${newWorkLog.id}`);
       } else {
         console.error(`${emoji.get('no_entry')} Failed:`);
         console.info(`response.status = ${response.status}`);
