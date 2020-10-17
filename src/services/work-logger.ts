@@ -1,14 +1,16 @@
-import { getTogglProjects, getTogglTimeEntries } from './toggl-service';
 import * as moment from 'moment';
 import * as reader from 'readline-sync';
-import logWorkInJira from './jira-service';
 import TogglProject from '../model/toggl-project';
 import TogglTimeEntry from '../model/toggl-time-entry';
 import JiraWorkLog from '../model/jira-work-log';
+import JiraService from './jira-service';
+import TogglService from './toggl-service';
 
 export default class WorkLogger {
+  private togglService = new TogglService();
+
   async run(): Promise<void> {
-    const projects = await getTogglProjects();
+    const projects = await this.togglService.getTogglProjects();
     console.info(`Retrieved ${projects.length} active Toggl projects`);
 
     const targetDate = reader.question('Enter your target date: (YYYY-MM-DD) ');
@@ -21,7 +23,7 @@ export default class WorkLogger {
   }
 
   private async proceed(projects: TogglProject[], targetDate: string) {
-    const entries = await getTogglTimeEntries(targetDate);
+    const entries = await this.togglService.getTogglTimeEntries(targetDate);
 
     console.info(
       `Found ${entries.length} Toggl entries for ${moment(targetDate, moment.ISO_8601).format('dddd, MMMM Do YYYY')}`
@@ -88,9 +90,11 @@ export default class WorkLogger {
   }
 
   private async logEntriesToJira(workLogs: JiraWorkLog[]) {
+    const jiraService = new JiraService();
+
     for (const workLog of workLogs) {
       console.info();
-      await logWorkInJira(workLog);
+      await jiraService.logWorkInJira(workLog);
     }
     return;
   }
