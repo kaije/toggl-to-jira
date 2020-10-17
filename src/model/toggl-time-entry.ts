@@ -1,4 +1,4 @@
-interface TogglTimeEntry {
+export default interface TogglTimeEntry {
   id: number;
   pid: number;
   start: string;
