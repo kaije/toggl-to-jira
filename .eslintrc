@@ -6,7 +6,9 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -23,7 +25,7 @@
     "rules": {
         "semi": "off",
         "@typescript-eslint/semi": ["error"],
-        "indent": ["error", 4],
+        "indent": ["error", 2],
         "require-jsdoc": "off",
         "max-len": ["error", 120],
         "no-trailing-spaces": [2, { "skipBlankLines": true }]
