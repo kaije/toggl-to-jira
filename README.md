@@ -18,8 +18,6 @@ You'll need a [Jira API token](https://confluence.atlassian.com/cloud/api-tokens
 
 To use this script, you must be using Jira issue keys (e.g. STA-207) as your Toggl project names, and associating each entry you want to log to Jira with a project. (Toggl entries without a project will be displayed for review, but will not be sent to Jira.)
 
-![Snip showing Jira issue key used as project for Toggle entry](./docs/images/toggl-jira-issue-key-as-project.jpg)
-
 ## Getting started
 
 ### Configure credentials for the Toggl and JIRA APIs
