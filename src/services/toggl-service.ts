@@ -1,6 +1,6 @@
 import * as fetch from 'node-fetch';
 import * as moment from 'moment';
-import { TOGGL_API_KEY } from '../config';
+import { TOGGL_API_KEY, TOGGL_WORKSPACE_ID } from '../config';
 import TogglTimeEntry from '../model/toggl-time-entry';
 import TogglProject from '../model/toggl-project';
 
@@ -8,7 +8,7 @@ export default class TogglService {
   private authToken = Buffer.from(`${TOGGL_API_KEY}:api_token`).toString('base64');
 
   async getTogglProjects(): Promise<TogglProject[]> {
-    const url = 'https://api.track.toggl.com/api/v8/workspaces/3678208/projects';
+    const url = `https://api.track.toggl.com/api/v8/workspaces/${TOGGL_WORKSPACE_ID}/projects`;
 
     try {
       const response = await fetch(url, {
@@ -19,7 +19,6 @@ export default class TogglService {
         },
         referrerPolicy: 'no-referrer',
       });
-      console.log(response);
       return response.json();
     } catch (error) {
       console.log(error);
