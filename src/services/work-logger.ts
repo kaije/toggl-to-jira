@@ -6,6 +6,8 @@ import JiraWorkLog from '../model/jira-work-log';
 import JiraService from './jira-service';
 import TogglService from './toggl-service';
 import { formatDuration, roundSeconds } from '../utils/duration-formatter';
+import SentEntry from '../model/sent-entry';
+import SentEntriesRepository from '../repositories/sent-entries-repository';
 
 export default class WorkLogger {
   private togglService = new TogglService();
@@ -70,28 +72,38 @@ export default class WorkLogger {
     }
   }
 
-  private buildJiraWorkLogs(entries: TogglTimeEntry[]): JiraWorkLog[] {
-    const workLogs = [];
-    for (const entry of entries) {
-      if (entry.jiraIssueKey) {
-        const workLog: JiraWorkLog = {
-          issueKey: entry.jiraIssueKey,
-          timeSpentSeconds: roundSeconds(entry.duration),
-          comment: entry.description,
-          started: moment(entry.start).format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+  private buildJiraWorkLogs(togglTimeEntries: TogglTimeEntry[]): SentEntry[] {
+    const togglJiraPairs = [];
+    for (const togglTimeEntry of togglTimeEntries) {
+      if (togglTimeEntry.jiraIssueKey) {
+        const jiraWorkLog: JiraWorkLog = {
+          issueKey: togglTimeEntry.jiraIssueKey,
+          timeSpentSeconds: roundSeconds(togglTimeEntry.duration),
+          comment: togglTimeEntry.description,
+          started: moment(togglTimeEntry.start).format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
         };
-        workLogs.push(workLog);
+        const entry: SentEntry = { togglTimeEntry: togglTimeEntry, jiraWorkLog: jiraWorkLog };
+        togglJiraPairs.push(entry);
       }
     }
-    return workLogs;
+    return togglJiraPairs;
   }
 
-  private async logEntriesToJira(workLogs: JiraWorkLog[]) {
+  private async logEntriesToJira(entriesToSend: SentEntry[]) {
     const jiraService = new JiraService();
 
-    for (const workLog of workLogs) {
+    for (const entry of entriesToSend) {
       console.info();
-      await jiraService.logWorkInJira(workLog);
+      const createdWorkLog = await jiraService.logWorkInJira(entry.jiraWorkLog);
+
+      const sentEntry: SentEntry = {
+        togglTimeEntry: entry.togglTimeEntry,
+        jiraWorkLog: createdWorkLog,
+      };
+
+      const sentEntriesRepo = new SentEntriesRepository();
+
+      sentEntriesRepo.saveSentEntry(sentEntry);
     }
     return;
   }
