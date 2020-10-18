@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import * as reader from 'readline-sync';
+import * as emoji from 'node-emoji';
 import TogglProject from '../model/toggl-project';
 import TogglTimeEntry from '../model/toggl-time-entry';
 import JiraWorkLog from '../model/jira-work-log';
@@ -50,7 +51,8 @@ export default class WorkLogger {
     );
     console.info();
 
-    const confirmation = reader.question('Would you like to proceed? (Y/N)');
+    const confirmation = reader.question('Would you like to proceed? (Y/N) ');
+    console.info();
 
     if (confirmation == 'Y') {
       this.logEntriesToJira(this.buildJiraWorkLogs(entries));
@@ -79,7 +81,7 @@ export default class WorkLogger {
     for (const togglTimeEntry of togglTimeEntries) {
       if (this.sentEntriesRepository.alreadySent(togglTimeEntry)) {
         console.info(
-          `Skipping - ${formatDuration(togglTimeEntry.duration, false)} already logged to ${
+          `${emoji.get('warning')}  Skipping - ${formatDuration(togglTimeEntry.duration, false)} already logged to ${
             togglTimeEntry.jiraIssueKey
           }: ${togglTimeEntry.description}`
         );
