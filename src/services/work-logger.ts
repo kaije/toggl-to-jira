@@ -6,8 +6,9 @@ import JiraWorkLog from '../model/jira-work-log';
 import JiraService from './jira-service';
 import TogglService from './toggl-service';
 import { formatDuration, roundSeconds } from '../utils/duration-formatter';
-import SentEntry from '../model/sent-entry';
+import TogglJiraEntryPair from '../model/toggl-jira-entry-pair';
 import SentEntriesRepository from '../repositories/sent-entries-repository';
+import SentEntry from '../model/sent-entry';
 
 export default class WorkLogger {
   private togglService = new TogglService();
@@ -72,7 +73,7 @@ export default class WorkLogger {
     }
   }
 
-  private buildJiraWorkLogs(togglTimeEntries: TogglTimeEntry[]): SentEntry[] {
+  private buildJiraWorkLogs(togglTimeEntries: TogglTimeEntry[]): TogglJiraEntryPair[] {
     const togglJiraPairs = [];
     for (const togglTimeEntry of togglTimeEntries) {
       if (togglTimeEntry.jiraIssueKey) {
@@ -82,27 +83,26 @@ export default class WorkLogger {
           comment: togglTimeEntry.description,
           started: moment(togglTimeEntry.start).format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
         };
-        const entry: SentEntry = { togglTimeEntry: togglTimeEntry, jiraWorkLog: jiraWorkLog };
+        const entry: TogglJiraEntryPair = { togglTimeEntry: togglTimeEntry, jiraWorkLog: jiraWorkLog };
         togglJiraPairs.push(entry);
       }
     }
     return togglJiraPairs;
   }
 
-  private async logEntriesToJira(entriesToSend: SentEntry[]) {
+  private async logEntriesToJira(entries: TogglJiraEntryPair[]) {
     const jiraService = new JiraService();
 
-    for (const entry of entriesToSend) {
+    for (const entry of entries) {
       console.info();
       const createdWorkLog = await jiraService.logWorkInJira(entry.jiraWorkLog);
 
       const sentEntry: SentEntry = {
         togglTimeEntry: entry.togglTimeEntry,
-        jiraWorkLog: createdWorkLog,
+        jiraWorkLogId: createdWorkLog.id,
       };
 
       const sentEntriesRepo = new SentEntriesRepository();
-
       sentEntriesRepo.saveSentEntry(sentEntry);
     }
     return;

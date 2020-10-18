@@ -42,7 +42,6 @@ export default class JiraService {
         console.info(`${emoji.get('white_check_mark')} Success!`);
         const newWorkLog: JiraWorkLog = await response.json();
         console.log(`Created Jira worklog with id ${newWorkLog.id}`);
-        console.log(newWorkLog);
         return newWorkLog;
       } else {
         console.error(`${emoji.get('no_entry')} Failed.`);

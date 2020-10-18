@@ -1,7 +1,6 @@
-import JiraWorkLog from './jira-work-log';
 import TogglTimeEntry from './toggl-time-entry';
 
 export default interface SentEntry {
+  jiraWorkLogId: number;
   togglTimeEntry: TogglTimeEntry;
-  jiraWorkLog: JiraWorkLog;
 }
