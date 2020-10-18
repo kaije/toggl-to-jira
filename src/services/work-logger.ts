@@ -12,6 +12,7 @@ import SentEntry from '../model/sent-entry';
 
 export default class WorkLogger {
   private togglService = new TogglService();
+  private sentEntriesRepository = new SentEntriesRepository();
 
   async run(): Promise<void> {
     const projects = await this.togglService.getTogglProjects();
@@ -76,15 +77,23 @@ export default class WorkLogger {
   private buildJiraWorkLogs(togglTimeEntries: TogglTimeEntry[]): TogglJiraEntryPair[] {
     const togglJiraPairs = [];
     for (const togglTimeEntry of togglTimeEntries) {
-      if (togglTimeEntry.jiraIssueKey) {
-        const jiraWorkLog: JiraWorkLog = {
-          issueKey: togglTimeEntry.jiraIssueKey,
-          timeSpentSeconds: roundSeconds(togglTimeEntry.duration),
-          comment: togglTimeEntry.description,
-          started: moment(togglTimeEntry.start).format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-        };
-        const entry: TogglJiraEntryPair = { togglTimeEntry: togglTimeEntry, jiraWorkLog: jiraWorkLog };
-        togglJiraPairs.push(entry);
+      if (this.sentEntriesRepository.alreadySent(togglTimeEntry)) {
+        console.info(
+          `Skipping - ${formatDuration(togglTimeEntry.duration, false)} already logged to ${
+            togglTimeEntry.jiraIssueKey
+          }: ${togglTimeEntry.description}`
+        );
+      } else {
+        if (togglTimeEntry.jiraIssueKey) {
+          const jiraWorkLog: JiraWorkLog = {
+            issueKey: togglTimeEntry.jiraIssueKey,
+            timeSpentSeconds: roundSeconds(togglTimeEntry.duration),
+            comment: togglTimeEntry.description,
+            started: moment(togglTimeEntry.start).format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+          };
+          const entry: TogglJiraEntryPair = { togglTimeEntry: togglTimeEntry, jiraWorkLog: jiraWorkLog };
+          togglJiraPairs.push(entry);
+        }
       }
     }
     return togglJiraPairs;
