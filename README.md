@@ -8,7 +8,9 @@ None of the available tools I found were quite what I wanted, so I decided to wr
 
 ### Node.js
 
-You will need to [install Node.js](https://nodejs.org/en/) (at least v12).
+You will need to [install Node.js](https://nodejs.org/en/).
+
+(Script has been tested with v12.19.0).
 
 ### Personal API tokens
 
