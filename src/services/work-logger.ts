@@ -47,7 +47,11 @@ export default class WorkLogger {
     console.info();
 
     console.info(
-      'Durations of less than 60 seconds will be rounded up to 1 minute as that is the minimum Jira will accept.'
+      `IMPORTANT:`,
+      `\n`,
+      `* Durations will be rounded to the nearest minute, as Jira otherwise ignores the remaining seconds portion.`,
+      `\n`,
+      `* Any duration of less than 60 seconds will be rounded up to 1 minute to meet the Jira minimum.`
     );
     console.info();
 
