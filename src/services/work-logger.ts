@@ -1,14 +1,19 @@
 import * as moment from 'moment';
 import * as reader from 'readline-sync';
+import * as emoji from 'node-emoji';
 import TogglProject from '../model/toggl-project';
 import TogglTimeEntry from '../model/toggl-time-entry';
 import JiraWorkLog from '../model/jira-work-log';
 import JiraService from './jira-service';
 import TogglService from './toggl-service';
 import { formatDuration, roundSeconds } from '../utils/duration-formatter';
+import TogglJiraEntryPair from '../model/toggl-jira-entry-pair';
+import SentEntriesRepository from '../repositories/sent-entries-repository';
+import SentEntry from '../model/sent-entry';
 
 export default class WorkLogger {
   private togglService = new TogglService();
+  private sentEntriesRepository = new SentEntriesRepository();
 
   async run(): Promise<void> {
     const projects = await this.togglService.getTogglProjects();
@@ -42,11 +47,16 @@ export default class WorkLogger {
     console.info();
 
     console.info(
-      'Durations of less than 60 seconds will be rounded up to 1 minute as that is the minimum Jira will accept.'
+      `IMPORTANT:`,
+      `\n`,
+      `* Durations will be rounded to the nearest minute, as Jira otherwise ignores the remaining seconds portion.`,
+      `\n`,
+      `* Any duration of less than 60 seconds will be rounded up to 1 minute to meet the Jira minimum.`
     );
     console.info();
 
-    const confirmation = reader.question('Would you like to proceed? (Y/N)');
+    const confirmation = reader.question('Would you like to proceed? (Y/N) ');
+    console.info();
 
     if (confirmation == 'Y') {
       this.logEntriesToJira(this.buildJiraWorkLogs(entries));
@@ -70,28 +80,45 @@ export default class WorkLogger {
     }
   }
 
-  private buildJiraWorkLogs(entries: TogglTimeEntry[]): JiraWorkLog[] {
-    const workLogs = [];
-    for (const entry of entries) {
-      if (entry.jiraIssueKey) {
-        const workLog: JiraWorkLog = {
-          issueKey: entry.jiraIssueKey,
-          timeSpentSeconds: roundSeconds(entry.duration),
-          comment: entry.description,
-          started: moment(entry.start).format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-        };
-        workLogs.push(workLog);
+  private buildJiraWorkLogs(togglTimeEntries: TogglTimeEntry[]): TogglJiraEntryPair[] {
+    const togglJiraPairs = [];
+    for (const togglTimeEntry of togglTimeEntries) {
+      if (this.sentEntriesRepository.alreadySent(togglTimeEntry)) {
+        console.info(
+          `${emoji.get('warning')}  Skipping - ${formatDuration(togglTimeEntry.duration, false)} already logged to ${
+            togglTimeEntry.jiraIssueKey
+          }: ${togglTimeEntry.description}`
+        );
+      } else {
+        if (togglTimeEntry.jiraIssueKey) {
+          const jiraWorkLog: JiraWorkLog = {
+            issueKey: togglTimeEntry.jiraIssueKey,
+            timeSpentSeconds: roundSeconds(togglTimeEntry.duration),
+            comment: togglTimeEntry.description,
+            started: moment(togglTimeEntry.start).format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+          };
+          const entry: TogglJiraEntryPair = { togglTimeEntry: togglTimeEntry, jiraWorkLog: jiraWorkLog };
+          togglJiraPairs.push(entry);
+        }
       }
     }
-    return workLogs;
+    return togglJiraPairs;
   }
 
-  private async logEntriesToJira(workLogs: JiraWorkLog[]) {
+  private async logEntriesToJira(entries: TogglJiraEntryPair[]) {
     const jiraService = new JiraService();
 
-    for (const workLog of workLogs) {
+    for (const entry of entries) {
       console.info();
-      await jiraService.logWorkInJira(workLog);
+      const createdWorkLog = await jiraService.logWorkInJira(entry.jiraWorkLog);
+
+      const sentEntry: SentEntry = {
+        togglTimeEntry: entry.togglTimeEntry,
+        jiraWorkLogId: createdWorkLog.id,
+      };
+
+      const sentEntriesRepo = new SentEntriesRepository();
+      sentEntriesRepo.saveSentEntry(sentEntry);
     }
     return;
   }
