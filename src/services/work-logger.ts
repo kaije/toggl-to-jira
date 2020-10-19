@@ -59,7 +59,7 @@ export default class WorkLogger {
     console.info();
 
     if (confirmation == 'Y') {
-      this.logEntriesToJira(this.buildJiraWorkLogs(entries));
+      this.logEntriesToJira(await this.buildJiraWorkLogs(entries));
     } else {
       console.info('Okay, process ended.');
     }
@@ -80,10 +80,10 @@ export default class WorkLogger {
     }
   }
 
-  private buildJiraWorkLogs(togglTimeEntries: TogglTimeEntry[]): TogglJiraEntryPair[] {
+  private async buildJiraWorkLogs(togglTimeEntries: TogglTimeEntry[]): Promise<TogglJiraEntryPair[]> {
     const togglJiraPairs = [];
     for (const togglTimeEntry of togglTimeEntries) {
-      if (this.sentEntriesRepository.alreadySent(togglTimeEntry)) {
+      if (await this.sentEntriesRepository.alreadySent(togglTimeEntry)) {
         console.info(
           `${emoji.get('warning')}  Skipping - ${formatDuration(togglTimeEntry.duration, false)} already logged to ${
             togglTimeEntry.jiraIssueKey
