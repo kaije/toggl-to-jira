@@ -11,10 +11,6 @@ export default class JiraService {
 
     const body = {
       timeSpentSeconds: jiraWorkLog.timeSpentSeconds,
-      visibility: {
-        type: 'group',
-        value: 'jira-developers',
-      },
       comment: jiraWorkLog.comment,
       started: jiraWorkLog.started,
     };
