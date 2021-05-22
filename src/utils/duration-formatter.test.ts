@@ -1,7 +1,7 @@
 import { formatDuration, roundSeconds } from './duration-formatter';
 
 test('300 seconds is formatted with remaining seconds as 0h 5m 0s', () => {
-  expect(formatDuration(300)).toBe('0h 5m 0s');
+  expect(formatDuration(300)).toBe('0h 6m 0s');
 });
 
 test('300 seconds is formatted without remaining seconds as 0h 5m', () => {
