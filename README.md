@@ -65,7 +65,19 @@ Enter a target date in the specified format when prompted.
 
 The script will display a list of Toggl entries found for that date, and then ask if you want to continue.
 
-Enter 'Y' to go ahead and send these entries to Jira, or hit enter to cancel (e.g. if you'd like to do a bit of clean up in Toggl before proceeding).
+Enter 'Y' to go ahead and send these entries to Jira, or hit enter to cancel (e.g. if you'd like to clean things up a bit in Toggl before proceeding).
+
+The tool will display a success or failure indicator for each entry sent to Jira.
+
+### Sent entries log
+
+Sent entries are written to a local file (`sent-entries.json`). Provided this file is left intact and complete by the user, the tool can be safely run multiple times for the same date without the risk of duplicate work logs being sent to Jira. It will display a 'skipped' notification on screen if a corresponding entry is found in the sent entries file.
+
+### Minimum duration and rounding
+
+Durations will be rounded to the nearest minute prior to sending, as Jira otherwise ignores the remaining seconds portion.
+
+Any duration of less than 60 seconds (including zero seconds) will be rounded up to meet the Jira minimum of one minute.
 
 ## Development
 
@@ -73,7 +85,7 @@ Enter 'Y' to go ahead and send these entries to Jira, or hit enter to cancel (e.
 
 This project uses [Jest](https://jestjs.io/) and [ts-jest](https://github.com/kulshekhar/ts-jest).
 
-Run the tests:
+To execute the tests:
 
 ```bash
 npm test
@@ -83,7 +95,7 @@ npm test
 
 This project uses [ESLint for TypeScript](https://github.com/typescript-eslint/typescript-eslint) and [Prettier](https://prettier.io/) for linting and formatting.
 
-Find and apply fixes:
+To find and apply fixes:
 
 ```bash
 npm run lint
@@ -99,7 +111,7 @@ npm run lint-preview
 
 Tools:
 
-* [NodeJS](https://nodejs.org/en/) (v12.19.0)
+* [NodeJS](https://nodejs.org/en/)
 * [TypeScript](https://www.typescriptlang.org/)
 * [ESLint for TypeScript](https://github.com/typescript-eslint/typescript-eslint)
 * [Prettier](https://prettier.io/)
