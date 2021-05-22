@@ -14,7 +14,7 @@ You will need to [install Node.js](https://nodejs.org/en/).
 
 ### Personal API tokens
 
-You'll need a [Jira API token](https://confluence.atlassian.com/cloud/api-tokens-938839638.html) and a [Toggl API token](https://github.com/toggl/toggl_api_docs#api-token).
+You'll need a [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) and a [Toggl API token](https://github.com/toggl/toggl_api_docs#api-token).
 
 ### Toggl projects must correspond to Jira issues
 
@@ -67,11 +67,21 @@ The script will display a list of Toggl entries found for that date, and then as
 
 Enter 'Y' to go ahead and send these entries to Jira, or hit enter to cancel (e.g. if you'd like to do a bit of clean up in Toggl before proceeding).
 
-## Contributing
+## Development
 
-This project uses ESLint for TypeScript and Prettier for linting and formatting.
+### Testing
+
+This project uses [Jest](https://jestjs.io/) and [ts-jest](https://github.com/kulshekhar/ts-jest).
+
+Run the tests:
+
+```bash
+npm test
+```
 
 ### Linting
+
+This project uses [ESLint for TypeScript](https://github.com/typescript-eslint/typescript-eslint) and [Prettier](https://prettier.io/) for linting and formatting.
 
 Find and apply fixes:
 
@@ -84,3 +94,19 @@ Or preview problems/fixes first without applying:
 ```bash
 npm run lint-preview
 ```
+
+### Built with
+
+Tools:
+
+* [NodeJS](https://nodejs.org/en/) (v12.19.0)
+* [TypeScript](https://www.typescriptlang.org/)
+* [ESLint for TypeScript](https://github.com/typescript-eslint/typescript-eslint)
+* [Prettier](https://prettier.io/)
+* [Jest](https://jestjs.io/)
+* [ts-jest](https://github.com/kulshekhar/ts-jest)
+
+Resources:
+
+* [Toggl API](https://github.com/toggl/toggl_api_docs)
+* [Jira Cloud Platform REST API (version 2)](https://developer.atlassian.com/cloud/jira/platform/rest/v2/intro/)
