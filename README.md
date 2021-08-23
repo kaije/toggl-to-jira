@@ -26,7 +26,7 @@ To use this script, you must be using Jira issue keys (e.g. STA-207) as your Tog
 
 Create a file called `.env` in the root of the project containing your private API tokens and your user account details as shown in the example below.
 
-:warning: DO NOT COMMIT THIS FILE! :warning: Note that it is included in `.gitignore` by default.
+:warning: **DO NOT COMMIT THIS FILE!** Note that it is included in `.gitignore` by default.
 
 ```text
 # Set your secret API tokens here
