@@ -1,6 +1,6 @@
 # Toggl-to-Jira
 
-A simple tool for converting Toggl time entries into Jira [worklog](https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-issue-worklogs/#api-group-issue-worklogs) entries for a specified target date.
+A simple console tool for converting Toggl time entries into Jira [worklog](https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-issue-worklogs/#api-group-issue-worklogs) entries for a specified target date.
 
 None of the available tools I found were quite what I wanted, so I decided to write my own as a toy project.
 
