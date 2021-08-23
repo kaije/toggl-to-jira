@@ -34,10 +34,12 @@
     "node-fetch": "^2.6.1",
     "readline-sync": "^1.4.10"
   },
-  "jest" :{
+  "jest": {
     "verbose": true,
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "testPathIgnorePatterns": [".js"]
+    "testPathIgnorePatterns": [
+      ".js"
+    ]
   }
 }
