@@ -10,7 +10,7 @@ None of the available tools I found were quite what I wanted, so I decided to wr
 
 You will need to [install Node.js](https://nodejs.org/en/).
 
-(Script has been tested with v12.19.0).
+(Script has been tested with v14.17.6).
 
 ### Personal API tokens
 
