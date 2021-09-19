@@ -9,7 +9,7 @@ export default class SentEntriesRepository {
     fs.writeFileSync('./sent-entries.json', JSON.stringify(entries));
   }
 
-  async alreadySent(entry: TogglTimeEntry) {
+  async alreadySent(entry: TogglTimeEntry): Promise<boolean> {
     const sentEntries = this.getExistingEntries();
     return sentEntries.filter((sentEntry) => sentEntry.togglTimeEntry.id === entry.id).length > 0;
   }
