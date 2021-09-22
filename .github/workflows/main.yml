@@ -18,6 +18,9 @@ jobs:
       
       - name: Audit
         run: npm audit --audit-level=moderate
+
+      - name: Linting
+        run: npm run lint-preview  
       
       - name: Run tests
         run: npm test
