@@ -29,6 +29,12 @@
         "max-len": ["error", 120],
         "no-trailing-spaces": [2, { "skipBlankLines": true }],
         "@typescript-eslint/no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars-experimental": "error"
+        "@typescript-eslint/no-unused-vars-experimental": "error",
+        "prettier/prettier": [
+            "error",
+            {
+              "endOfLine": "auto"
+            }
+        ]
     }
   }
