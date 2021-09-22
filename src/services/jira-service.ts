@@ -7,7 +7,7 @@ import { formatDuration } from '../utils/duration-formatter';
 export default class JiraService {
   async logWorkInJira(jiraWorkLog: JiraWorkLog): Promise<JiraWorkLog> {
     const url = `${JIRA_BASE_URL}/rest/api/2/issue/${jiraWorkLog.issueKey}/worklog`;
-  const authToken = Buffer.from(`${JIRA_USER_EMAIL}:${JIRA_API_KEY}`).toString('base64');
+    const authToken = Buffer.from(`${JIRA_USER_EMAIL}:${JIRA_API_KEY}`).toString('base64');
 
     const body = {
       timeSpentSeconds: jiraWorkLog.timeSpentSeconds,
