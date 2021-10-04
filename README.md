@@ -4,14 +4,15 @@ A simple command line utility for converting [Toggl](https://toggl.com/) time en
 
 There are a lot of similar projects on GitHub, but none were quite what I wanted, so I decided to write my own and get a little extra practice with TypeScript. :slightly_smiling_face:
 
-## Prerequisites
+## Usage
+
+To use this utility, you'll need to be using Jira issue keys (e.g. STA-207) as your Toggl project names, and associating each entry you want to log to Jira with a project. Toggl entries without a project will be displayed for review, but will not be sent to Jira.
+
+### Prerequisites
 
 * You'll need to [install Node.js](https://nodejs.org/en/). (Last tested with v14.17.6)
 * You'll need a [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) and a [Toggl API token](https://github.com/toggl/toggl_api_docs#api-token).
 
-## Usage
-
-To use this utility, you'll need to be using Jira issue keys (e.g. STA-207) as your Toggl project names, and associating each entry you want to log to Jira with a project. Toggl entries without a project will be displayed for review, but will not be sent to Jira.
 
 ### Configure your credentials for Toggl and JIRA
 
