@@ -7,7 +7,7 @@ There are a lot of similar projects on GitHub, but none were quite what I wanted
 ## Prerequisites
 
 * You'll need to [install Node.js](https://nodejs.org/en/). (Last tested with v14.17.6)
-* You'll need a [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) and a [Toggl API token](https://github.com/toggl/toggl_api_docs#api-token). (Be sure to keep these secret!)
+* You'll need a [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) and a [Toggl API token](https://github.com/toggl/toggl_api_docs#api-token).
 
 ## Usage
 
@@ -32,9 +32,9 @@ JIRA_USER_EMAIL="someone@somewhere.com"
 TOGGL_WORKSPACE_ID=1234567
 ```
 
-### Run the utility
+### Install and run the utility
 
-From the project root, run:
+After cloning a local copy, run the following from the project root:
 
 ```bash
 npm install
@@ -46,7 +46,7 @@ then:
 npm run build
 ```
 
-To start the script, run:
+To start the utility, run:
 
 ```bash
 npm start
