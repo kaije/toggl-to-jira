@@ -1,32 +1,23 @@
 # Toggl-to-Jira
 
-A simple command line tool for converting Toggl time entries into Jira [worklog](https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-issue-worklogs/#api-group-issue-worklogs) entries for a specified target date.
+A simple command line utility for converting Toggl time entries into Jira [worklog](https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-issue-worklogs/#api-group-issue-worklogs) entries for a specified target date.
 
-None of the available tools I found were quite what I wanted, so I decided to write my own as a personal project.
+There are a lot of similar projects on GitHub, but none were quite what I wanted. So I decided to write my own and get some extra practice with TypeScript. :slightly_smiling_face:
 
 ## Prerequisites
 
-### Node.js
+* You'll need to [install Node.js](https://nodejs.org/en/). (Last tested with v14.17.6)
+* You'll need a [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) and a [Toggl API token](https://github.com/toggl/toggl_api_docs#api-token). (Be sure to keep these secret!)
 
-You will need to [install Node.js](https://nodejs.org/en/).
+## Usage
 
-(Script has been tested with v14.17.6).
+To use this utility, you'll need to be using Jira issue keys (e.g. STA-207) as your Toggl project names, and associating each entry you want to log to Jira with a project. Toggl entries without a project will be displayed for review, but will not be sent to Jira.
 
-### Personal API tokens
-
-You'll need a [Jira API token](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/) and a [Toggl API token](https://github.com/toggl/toggl_api_docs#api-token).
-
-### Toggl projects must correspond to Jira issues
-
-To use this script, you must be using Jira issue keys (e.g. STA-207) as your Toggl project names, and associating each entry you want to log to Jira with a project. (Toggl entries without a project will be displayed for review, but will not be sent to Jira.)
-
-## Getting started
-
-### Configure credentials for the Toggl and JIRA APIs
+### Configure your credentials for Toggl and JIRA
 
 Create a file called `.env` in the root of the project containing your private API tokens and your user account details as shown in the example below.
 
-:warning: **DO NOT COMMIT THIS FILE!** Note that it is included in `.gitignore` by default.
+:warning: **Do not commit this file!** Note that it is included in `.gitignore` by default.
 
 ```text
 # Set your secret API tokens here
@@ -41,21 +32,21 @@ JIRA_USER_EMAIL="someone@somewhere.com"
 TOGGL_WORKSPACE_ID=1234567
 ```
 
-## Running the script
+### Run the utility
 
-Install:
+From the project root, run:
 
 ```bash
 npm install
 ```
 
-Build:
+then:
 
 ```bash
 npm run build
 ```
 
-To start the script, run the following from the project root:
+To start the script, run:
 
 ```bash
 npm start
@@ -101,7 +92,7 @@ To find and apply fixes:
 npm run lint
 ```
 
-Or preview problems/fixes first without applying:
+Or to preview problems/fixes first without applying:
 
 ```bash
 npm run lint-preview
@@ -109,16 +100,11 @@ npm run lint-preview
 
 ### Built with
 
-Tools:
-
 * [NodeJS](https://nodejs.org/en/)
 * [TypeScript](https://www.typescriptlang.org/)
 * [ESLint for TypeScript](https://github.com/typescript-eslint/typescript-eslint)
 * [Prettier](https://prettier.io/)
 * [Jest](https://jestjs.io/)
 * [ts-jest](https://github.com/kulshekhar/ts-jest)
-
-Resources:
-
 * [Toggl API](https://github.com/toggl/toggl_api_docs)
 * [Jira Cloud Platform REST API (version 2)](https://developer.atlassian.com/cloud/jira/platform/rest/v2/intro/)
