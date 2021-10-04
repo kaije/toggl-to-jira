@@ -2,7 +2,7 @@
 
 A simple command line utility for converting [Toggl](https://toggl.com/) time entries into Jira [worklog](https://developer.atlassian.com/cloud/jira/platform/rest/v2/api-group-issue-worklogs/#api-group-issue-worklogs) entries for a specified target date.
 
-There are a lot of similar projects on GitHub, but none were quite what I wanted. So I decided to write my own and get some extra practice with TypeScript. :slightly_smiling_face:
+There are a lot of similar projects on GitHub, but none were quite what I wanted, so I decided to write my own and get a little extra practice with TypeScript. :slightly_smiling_face:
 
 ## Prerequisites
 
